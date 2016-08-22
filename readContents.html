@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-22 Mon 14:27 -->
+<!-- 2016-08-22 Mon 16:09 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
-<title>App中若干支付流程</title>
+<title>读书</title>
 <meta  name="generator" content="Org-mode" />
-<meta  name="author" content="Sheck Gu" />
+<meta  name="author" content="Sheck" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -94,6 +94,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="../sheckgu.github.io/style.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -143,70 +144,12 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">App中若干支付流程</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orgheadline1">1. 银联</a></li>
-<li><a href="#orgheadline2">2. 支付宝</a></li>
-<li><a href="#orgheadline3">3. 微信</a></li>
-</ul>
-</div>
-</div>
+<h1 class="title">读书</h1>
 
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> 银联</h2>
-<div class="outline-text-2" id="text-1">
-<ol class="org-ol">
-<li>［客户端］用户点击购买商品，［客户端］发起订单生成请求到商户后台；</li>
-<li>［商户后台］收到订单生成请求后，按照《手机控件支付产品接口规范》组织并推送订单信息至［银联后台］；</li>
-<li>［银联后台］接收订单信息并检查通过后，生成对应交易流水号（TN），并返回给［商户后台］；</li>
-<li>［商户后台］接收并返回交易流水号TN给［客户端］；</li>
-<li>［客户端］通过交易流水号TN启动支付控件开始支付，银联的支付控件是「安全支付助手」；</li>
-<li>［客户端］的支付控件收集支付信息后，由支付控件向［银联后台］发起请求完成支付；</li>
-<li>［银联后台］通知［商户后台］支付结果；</li>
-<li>［银联后台］通知［客户端］中的支付宝控件支付结果；</li>
-<li>［客户端］支付控件显示支付结果并将支付结果返回客户端。</li>
-</ol>
-</div>
-</div>
-
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2"><span class="section-number-2">2</span> 支付宝</h2>
-<div class="outline-text-2" id="text-2">
-<ol class="org-ol">
-<li>［客户端］用户选好商品后，点击提交订单，选择使用支付宝付款；</li>
-<li>［客户端］把商品信息传给［商户后台］；</li>
-<li>［商户后台］将各种数据拼接签名后生成一个签名后的字符串，回传到［客户端］；</li>
-<li>［客户端］调用手机支付客户端，利用［商户后台］发来的参数调起支付宝，让支付宝App完成支付；</li>
-<li>［支付宝后台］将支付结果（成功或不成功）返回给［客户端］的支付宝App和［商户后台］；</li>
-<li>［商户后台］接收到数据后更新数据，［客户端］收到结果后显示相关信息。</li>
-</ol>
-</div>
-</div>
-
-<div id="outline-container-orgheadline3" class="outline-2">
-<h2 id="orgheadline3"><span class="section-number-2">3</span> 微信</h2>
-<div class="outline-text-2" id="text-3">
-<ol class="org-ol">
-<li>［客户端］用户选择商品下单；</li>
-<li>［客户端］将用户的商品数据传给［商户后台］，请求生成支付订单；</li>
-<li>［商户后台］调用统一下单API向［微信后台］发送请求，［微信后台］生成预付单，并生成一个prepay_id返回给［商户后台］；</li>
-<li>［商户后台］将prepay_id返回［客户端］；</li>
-<li>［客户端］调用SDK打开微信App，进行微信支付；</li>
-<li>［客户端］微信App向［微信后台］发起支付请求并返回支付结果（他们之间交互的就是prepay_id这个参数，［微信后台］要验证微信App传过去的参数是否跟 3 中生成的那个id一致）；</li>
-<li>［客户端］微信App提交支付授权，与［微信后台］交互，完成支付；</li>
-<li>［微信后台］给［客户端］微信App发送支付结果提示，并异步给［商户后台］发送支付结果通知；</li>
-<li>［客户端］通过支付结果回调接口查询支付结果，并向［商户后台］检查支付结果是否正确，［商户后台］返回支付结果；</li>
-<li>［客户端］显示支付结果，完成订单。</li>
-</ol>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Sheck Gu</p>
-<p class="date">Created: 2016-08-22 Mon 14:27</p>
+<p class="author">Author: Sheck</p>
+<p class="date">Created: 2016-08-22 Mon 16:09</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
